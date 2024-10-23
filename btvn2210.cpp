@@ -27,6 +27,37 @@ void Sapxep(danso a[], int l, int r) {
     Sapxep(a, j + 1, r);
 }
 
+void Task1(danso a[], int sonam) {
+    int i = 0;
+    while (i < sonam) {
+        int m = a[i].soluongnguoi;
+        cout << "So luong nguoi: " << m << " Cac nam cung so nguoi sinh: ";
+        while (a[i].soluongnguoi == m) {
+            cout << a[i].namsinh << ' ';
+            i++;
+        }
+        cout << endl;
+    }
+}
+
+void Task2(danso a[], int sonam) {
+    int i = 0, j = sonam - 1;
+    int m = a[i].soluongnguoi;
+    cout << "So nguoi sinh it nhat trong 1 nam: " << m << " Cac nam cung so nguoi sinh: ";
+    while (a[i].soluongnguoi == m && i < sonam) {
+        cout << a[i].namsinh << ' ';
+        i++;
+    }
+    cout << endl;
+    int n = a[j].soluongnguoi;
+    cout << "So nguoi sinh nhieu nhat trong 1 nam: " << n << " Cac nam cung so nguoi sinh: ";
+    while (a[j].soluongnguoi == n && j >= 0) {
+        cout << a[j].namsinh << ' ';
+        j--;
+    }
+
+}
+
 int main() {
     int sonam = 11;
     danso a[sonam] = { {1920, 30}, {1921, 11}, {1922, 26}, {1923, 30}, {1924, 35}, {1925, 40},
@@ -34,21 +65,8 @@ int main() {
 
     Sapxep(a, 0, sonam - 1);
     
-    int i = 0;
-    while (i < sonam) {
-        if (a[i].soluongnguoi != a[i + 1].soluongnguoi) {
-            cout << "So luong nguoi: " << a[i].soluongnguoi
-                 << " Cac nam cung so luong nguoi sinh: " << a[i].namsinh << ' ' << endl;
-            i++;
-        } else {
-        cout << "So luong nguoi: " << a[i].soluongnguoi
-             << " Cac nam cung so luong nguoi sinh: " << a[i].namsinh << ' ';
-        while (a[i].soluongnguoi == a[i + 1].soluongnguoi) {
-            ++i;
-            cout << a[i].namsinh << ' ';
-        }
-        cout << endl;
-        i++;
-    } }
+    Task1(a, sonam);
+    Task2(a, sonam);
+    
 
 }
