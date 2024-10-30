@@ -15,6 +15,7 @@ Node* TaoNodeMoi(int heso, int somu) {
     Node* p = new Node();
     if (heso == 0) {
         delete p;
+        cout << "Da giai phong cap phat phan tu nay do he so = 0\n";
         return nullptr;
     }
     p->heso = heso;
@@ -48,9 +49,14 @@ void NhapDathuc(Node*& head) {
 void InDathuc(Node*& head) {
     Node* tmp = head;
     while (tmp != NULL) {
-        cout << tmp->heso << "x^" << tmp->somu;
-        if (tmp->next != NULL) cout << " + ";
-        tmp = tmp->next;
+        if (tmp->somu != 0) {
+            cout << tmp->heso << "x^" << tmp->somu;
+            if (tmp->next != NULL) cout << " + ";
+            tmp = tmp->next;
+        } else {
+            cout << tmp->heso;
+            tmp = tmp->next;
+        }
     }
     cout << endl;
 }
@@ -58,8 +64,6 @@ void InDathuc(Node*& head) {
 int main() {
     Node* head;
     khoitao(head);
-
     NhapDathuc(head);
     InDathuc(head);
-
 }
