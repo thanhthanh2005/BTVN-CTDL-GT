@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 struct Node {
@@ -13,11 +14,7 @@ void khoitao(Node*& head) {
 
 Node* TaoNodeMoi(int heso, int somu) {
     Node* p = new Node();
-    if (heso == 0) {
-        delete p;
-        cout << "Da giai phong cap phat phan tu nay do he so = 0\n";
-        return nullptr;
-    }
+    if (p == nullptr) return nullptr;
     p->heso = heso;
     p->somu = somu;
     p->next = nullptr;
@@ -44,6 +41,17 @@ void NhapDathuc(Node*& head) {
         cin >> heso;
         ChenNodeVaoDanhSach(heso, somu, head);
     }
+}
+
+void XoaPT(Node*& head) {
+    Node* p = head;
+    while (p) {
+        if (p->heso == 0) {
+            Node* tmp = p;
+            
+        }
+    }
+
 }
 
 void InDathuc(Node*& head) {
