@@ -14,15 +14,15 @@ int str_length(const char* s) {
     return d;
 }
 
-bool str_cmp(const char* str1, const char* str2) {
+bool str_cmp(char* str1, char* str2) {
     while (*str1 && *str2) {
-        if (*str1 != *str2) { 
-            return false; 
+        if (*str1 != *str2) {
+            return false;
         }
         str1++;
         str2++;
     }
-    return (*str1 == '\0' && *str2 == '\0');
+    return *str1 == '\0' && *str2 == '\0';
 }
 
 
@@ -37,7 +37,6 @@ char* str_copy(char* s, const char* src){
 Wordnode* newnode(List* l, const char* word) {
     Wordnode* p = new Wordnode();
     if (p == nullptr) return 0;
-    if (l->head == 0) return p;
     str_copy(p->word, word);
     p->next = nullptr;
     return p;
@@ -74,7 +73,84 @@ char* findword(List* l) {
     return wordmost;
 }
 
+void deleteWord(List* l) {
+    if (l->head == nullptr) {
+        cout << "Danh sach rong, khong co tu lay." << endl;
+        return;
+    }
 
+    while (l->head != nullptr && l->head->next != nullptr 
+            && str_cmp(l->head->word, l->head->next->word)) {
+        Wordnode* p = l->head;
+        l->head = l->head->next;
+        delete p;
+    }
+
+    Wordnode* tmp = l->head;
+    while (tmp != nullptr && tmp->next != nullptr) {
+        if (str_cmp(tmp->word, tmp->next->word)) {
+            Wordnode* p = tmp->next;
+            tmp->next = tmp->next->next;
+            delete p;
+        } else {
+            tmp = tmp->next;  
+        }
+    }
+}
+
+int countWord(List* l) {
+    int c = 0;
+    if (l->head == nullptr) return 0;
+    Wordnode* tmp = l->head;
+    
+    // Mảng kiểm tra các từ đã xuất hiện
+    while (tmp != nullptr) {
+        bool mark = true;
+        Wordnode* p = tmp->next;
+        while (p != nullptr) {
+            if (str_cmp(tmp->word, p->word)) {
+                mark = false;
+                break;  
+            }
+            p = p->next;
+        }
+        if (mark) c++; 
+        tmp = tmp->next;
+    }
+    return c;
+}
+
+
+void nhap(List* l) {
+    int n;
+    cout << "Nhập số từ: ";
+    cin >> n;
+    cin.ignore();
+    for (int i = 0; i < n; i++) {
+        char word[10];
+        cout << "Nhập từ thứ " << i + 1 << ": ";
+        cin.getline(word, 10);
+        addWord(l, word);
+    }
+}
+
+void in(List* l) {
+    Wordnode* tmp = l->head;
+    while (tmp) {
+        cout << tmp->word << ' ';
+        tmp = tmp->next;
+    }
+}
 int main() {
+    List list;
+    init(&list);
+    nhap(&list);
+
+    cout << findword(&list) << endl;
+    deleteWord(&list);
+    in(&list);
+    cout << endl;
+    cout << "Số từ vựng xuất hiện trong câu: " << countWord(&list);
+
 
 }
