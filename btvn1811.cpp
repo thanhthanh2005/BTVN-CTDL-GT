@@ -103,7 +103,6 @@ int countWord(List* l) {
     if (l->head == nullptr) return 0;
     Wordnode* tmp = l->head;
     
-    // Mảng kiểm tra các từ đã xuất hiện
     while (tmp != nullptr) {
         bool mark = true;
         Wordnode* p = tmp->next;
@@ -119,7 +118,6 @@ int countWord(List* l) {
     }
     return c;
 }
-
 
 void nhap(List* l) {
     int n;
