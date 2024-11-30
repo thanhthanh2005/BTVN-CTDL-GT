@@ -116,6 +116,21 @@ int price_cart(cart* crt) {
     }
 }
 
+int price_queuecart(queue_cart* qc) {
+    if (cart_empty(qc)) {
+        cout << "Không có giỏ hàng để thanh toán";
+        return -1;
+    } else {
+        int p = 0;
+        cart* crt = qc->front;
+        while (crt) {
+            p += price_cart(crt);
+            crt = crt->next;
+        }
+        return p;
+    }
+}
+
 void dequeue_product_in_cart(cart* crt) {    // xóa sản phẩm khỏi queue trong giỏ
     if (/*crt == nullptr || */product_empty_in_cart(crt)) {
         cout << "Khong co san pham trong gio de xoa" << endl;
@@ -136,7 +151,7 @@ bool payment_is_successful(cart* crt) {   // kiểm tra thanh toán thành công
     while (!product_empty_in_cart(crt)) {
         dequeue_product_in_cart(crt);
     }
-    cout << "gio hang duoc thanh toan" << endl;
+    //cout << "gio hang duoc thanh toan" << endl;
     return true;  
 }
 
@@ -158,17 +173,59 @@ void dequeue_cart(queue_cart* qc) {   // loại bỏ giỏ hàng khi thanh toán
     }
 }
 
+void payment_queuecart(queue_cart* qc) {
+    if (cart_empty(qc)) {
+        cout << "Khong co gio hang de thanh toan";
+        return;
+    } else {
+        while (!cart_empty(qc)) {
+            dequeue_cart(qc);
+        }
+        cout << "Tat ca gio hang duoc thanh ";
+    }
+} 
+
+void input_cart(queue_cart* qc) {
+    int nums_of_cart;
+    cout << "Số giỏ hàng cần được thanh toán: ";
+    cin >> nums_of_cart;
+    for (int i = 1; i <= nums_of_cart; i++) {
+        enqueue_cart(qc);
+        cart* crt = qc->rear;
+        cout << "Số sản phẩm trong giỏ hàng " << i << ": ";
+        int nums_of_product;
+        cin >> nums_of_product;
+        for (int j = 1; j <= nums_of_product; j++) {
+            int code_pr, price_pr;
+            cout << "Mã sản phẩm " << j << ": ";
+            cin >> code_pr;
+            cout << endl;
+            cout << "Giá sản phẩm " << j << ": ";
+            cin >> price_pr;
+            cout << endl;
+            enqueue_product_in_cart(crt, code_pr, price_pr);
+        }
+    }
+}
+
 int main() {
     queue_cart qc;
     init(&qc);
 
-    enqueue_cart(&qc);
+    input_cart(&qc);
+
+    cout << "Số lượng sản phẩm A đã mua: " << count_product(&qc) << endl;
+    cout << "Tổng số tiền thu được: " << price_queuecart(&qc) << endl;
+    payment_queuecart(&qc);
+
+
+    //enqueue_cart(&qc);
     
-    enqueue_product_in_cart(qc.front, 2024, 100);
-    enqueue_product_in_cart(qc.front, 2024, 200);
-    cout << qc.numbers_of_cart << endl;
+    //enqueue_product_in_cart(qc.front, 2024, 100);
+    //enqueue_product_in_cart(qc.front, 2024, 200);
+    //cout << qc.numbers_of_cart << endl;
     //cout << qc.front->numbers_of_product;
     //enqueue_product_in_cart(qc.front->next, 2024, 100);
     //dequeue_cart(&qc);
-    cout << qc.front->numbers_of_product;
+    //cout << qc.front->numbers_of_product;
 }
