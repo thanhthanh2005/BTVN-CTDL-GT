@@ -44,17 +44,20 @@ void NhapDathuc(Node*& head) {
 }
 
 void XoaPT(Node*& head) {
-    Node* p = head;
-    while (p) {
-        if (p->heso == 0) {
-            Node* tmp = p;
-            
-        }
+    Node* tmp = head;
+    while (tmp) {
+        if (head->heso == 0) {
+            Node* p = tmp;
+            head = head->next;
+            delete p;
+            tmp = tmp->next;
+        } else tmp = tmp->next;
     }
 
 }
 
 void InDathuc(Node*& head) {
+    XoaPT(head);
     Node* tmp = head;
     while (tmp != NULL) {
         if (tmp->somu != 0) {

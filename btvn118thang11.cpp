@@ -2,7 +2,7 @@
 #include <cstring>
 using namespace std;
 
-const int storage = 32 * 1024;
+const int storage = 5000;
 struct FileNode {
     string filename;
     int filesize;
@@ -53,7 +53,7 @@ void arrangeFile_time(List* l) { // selection sort
     }    
 }
 
-void arrangeFile_size(List* l) { // insertion sort
+void arrangeFile_size(List* l) { // selection sort
     FileNode* tmp = l->head;
     while (tmp) {
         FileNode* min = tmp;
@@ -101,13 +101,15 @@ void deleteFile(List* l) {
         return;
     } else {
         FileNode* tmp = l->head;
+        cout << "Da xoa file";
         while (tmp && sum > storage) {
             sum -= tmp->filesize;
-            FileNode* p = tmp->next;
+            FileNode* p = tmp;
+            cout << tmp->filename << ' ' << tmp->filesize << ' ' << tmp->time << endl;
+            l->head = tmp->next->next;
             tmp = tmp->next;
             delete p;
         }
-        cout << "Da xoa file";
     }
 
 }
@@ -132,8 +134,9 @@ int main() {
     addfile(&document1, "file2.txt", 2048, "2024-11-09");
     addfile(&document1, "file3.txt", 512, "2024-11-11");
 
-    copyFile(&document1, &document2, "file4.txt", 2048, "2024-11-04");
+    copyFile(&document1, &document2, "file4.txt", 2048, "2024-11-04"); // copy file từ doc2 sang doc1
     deleteFile(&document1);
-   
+    //arrangeFile_size(&document1);
+    //printList(&document1);
 
 }
