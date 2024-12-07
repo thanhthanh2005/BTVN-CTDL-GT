@@ -23,7 +23,7 @@ Node* newnode(char data) {
     return p;
 }
 
-void initTree(Node* root) {
+void initTree(Node*& root) {
     root = nullptr;
 }
 
@@ -36,6 +36,7 @@ Node* insert(Node* root, char data) {
         root = newnode(data);
         return root;
     }
+
     if (root->left == nullptr) {
         root->left = newnode(data);
     } else if (root->right == nullptr) {
@@ -66,5 +67,42 @@ void printPrefix(Node* node) {
 }
 
 int main() {
+    Node* root = nullptr;
+    initTree(root);
+    
 
+    root = insert(root, '+');  
+    root = insert(root, '-');  
+    root = insert(root, '*');  
+    root = insert(root->left, '5');  
+    root = insert(root->left, 'a');  
+    root = insert(root->right, 'b'); 
+    root = insert(root->right, 'c'); 
+    root = insert(root->right->right, '^'); 
+    root = insert(root->right->right->right, '6'); 
+    root = insert(root->right->right->right, '/'); 
+    root = insert(root->right->right->right->right, 'd'); 
+    root = insert(root->left->left, '(');  
+    root = insert(root->left->left->left, 'h'); 
+    root = insert(root->left->left->right, '-'); 
+    root = insert(root->left->left->right->left, 'f'); 
+    root = insert(root->left->left->right->right, ')'); 
+    root = insert(root->right->right->right->right->right, '*'); 
+    root = insert(root->right->right->right->right->right, 'e'); 
+    root = insert(root->right->right->right->right->right->right, '^'); 
+    root = insert(root->right->right->right->right->right->right->right, '1'); 
+    root = insert(root->right->right->right->right->right->right->right, '2'); 
+
+    printInfix(root);
+    cout << endl;
+
+    printPostfix(root);
+    cout << endl;
+
+    printPrefix(root);
+    cout << endl;
+
+    return 0;
 }
+
+
