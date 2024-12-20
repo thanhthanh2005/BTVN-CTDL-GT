@@ -98,7 +98,17 @@ void chapter_longest(Book* b) {
 	}
 	cout << "Chapter is the longest : " << title << endl;
 	cout << max; 
+}
 
+bool find_section(Node* s, const char* title) {
+	if (s == nullptr) return false;
+	for (int i = 0; i < MAX; i++) {
+		if (s->section[i]) {
+			if (s->section[i]->title == title) return true;
+			if (find_section(s->section[i], title)) return true;
+		}
+	}
+	return false;
 }
 
 int main() {
@@ -125,6 +135,7 @@ int main() {
 	addChapter("Chuong 4", 80, &book, book.root);
 	addSection("Muc 4.1", 85, book.root->section[3]);
 	
-	cout << countchapter(&book) << endl;
-	chapter_longest(&book);
+    //cout << "Numbers of chapter: " << countchapter(&book) << endl;
+	//chapter_longest(&book);
+	cout << find_section(book.root, "Muc 2.1.2.3");
 }
