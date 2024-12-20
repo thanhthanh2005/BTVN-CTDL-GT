@@ -111,6 +111,32 @@ bool find_section(Node* s, const char* title) {
 	return false;
 }
 
+void delete_section(Node* s, const char* title) {
+    if (s == nullptr) return;
+
+    for (int i = 0; i < MAX; i++) {
+        if (s->section[i]) {
+            if (s->section[i]->title == title) {
+                // Xóa mục
+                delete s-> section[i];
+                s->section[i] = nullptr;
+
+                // Cập nhật lại các mục con và số trang
+                for (int j = i; j < MAX - 1; j++) {
+                    s->section[j] = s->section[j + 1];
+                    if (s->section[j] != nullptr) {
+                        s->section[j]->page_start -= 1; // Giảm số trang cho các mục còn lại
+                    }
+                }
+                s->section[MAX - 1] = nullptr; // Đặt mục cuối cùng thành nullptr
+                return;
+            } else {
+                delete_section(s->section[i], title); // Tìm kiếm trong các mục con
+            }
+        }
+    }
+}
+
 int main() {
 	Book book;
 	init(&book);
@@ -135,7 +161,7 @@ int main() {
 	addChapter("Chuong 4", 80, &book, book.root);
 	addSection("Muc 4.1", 85, book.root->section[3]);
 	
-    //cout << "Numbers of chapter: " << countchapter(&book) << endl;
-	//chapter_longest(&book);
+    cout << "Numbers of chapter: " << countchapter(&book) << endl;
+	chapter_longest(&book);
 	cout << find_section(book.root, "Muc 2.1.2.3");
 }
