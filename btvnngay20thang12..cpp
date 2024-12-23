@@ -83,13 +83,18 @@ int countchapter(Book* b) {
     return c;
 }
 
+int page_chapter(Node* s) {
+	if (s == nullptr) return -1;
+	
+}
+
 void chapter_longest(Book* b) {
 	int max = 0;
 	const char* title;
 	int c = countchapter(b);
 	for (int i = 0; i < c; i++) {
 		if (b->root->section[i + 1] != nullptr) {
-		    int m = b->root->section[i + 1]->page_start - b->root->section[i]->page_start;
+		    int m = b->root->section[i + 1]->page_start - b->root->section[i]->page_start + 1;
 		    if (m > max) {
 			    max = m;
 			    title = b->root->section[i]->title;
@@ -112,29 +117,18 @@ bool find_section(Node* s, const char* title) {
 }
 
 void delete_section(Node* s, const char* title) {
-    if (s == nullptr) return;
+	if (find_section(s, title) == false) return;
+	for (int i = 0; i < MAX; i++) {
+		if (s->section[i] ) {
+			if (s->section[i]->title == title) {
+				if (s->section[i + 1]) 
+				    int tmp = s->section[i + 1]->page_start - s->section[i]->page_start + 1;
+					int nums_chapter = 
 
-    for (int i = 0; i < MAX; i++) {
-        if (s->section[i]) {
-            if (s->section[i]->title == title) {
-                // Xóa mục
-                delete s-> section[i];
-                s->section[i] = nullptr;
-
-                // Cập nhật lại các mục con và số trang
-                for (int j = i; j < MAX - 1; j++) {
-                    s->section[j] = s->section[j + 1];
-                    if (s->section[j] != nullptr) {
-                        s->section[j]->page_start -= 1; // Giảm số trang cho các mục còn lại
-                    }
-                }
-                s->section[MAX - 1] = nullptr; // Đặt mục cuối cùng thành nullptr
-                return;
-            } else {
-                delete_section(s->section[i], title); // Tìm kiếm trong các mục con
-            }
-        }
-    }
+			}
+		}
+	}
+	
 }
 
 int main() {
