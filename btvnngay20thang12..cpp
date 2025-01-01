@@ -123,8 +123,7 @@ void delete_section(Node* s, const char* title) {
 			if (s->section[i]->title == title) {
 				if (s->section[i + 1]) 
 				    int tmp = s->section[i + 1]->page_start - s->section[i]->page_start + 1;
-					int nums_chapter = 
-
+					//int nums_chapter = 
 			}
 		}
 	}
