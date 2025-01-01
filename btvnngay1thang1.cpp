@@ -46,8 +46,6 @@ int main() {
     add_path(data, "UB", "HP", 12);
     add_path(data, "HP", "HD", 13);
     
-
-
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             cout << data[i][j] << ' ';
