@@ -27,7 +27,7 @@ void addNode(Node*& node, int p, int dst) {
 void printGraph(Node* node) {
     cout << node->position << ':';
     while (node->link) {
-        cout << node->link->position << ' ' 
+        cout << node->link->position
             << '(' << node->link->dst << ')' << ' ';
         node = node->link;
     }
